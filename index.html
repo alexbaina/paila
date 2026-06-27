@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+</head>
+<body>
+
+<h3 id="msg">Loading...</h3>
+
+<script>
+(function () {
+
+    const srv_domain = "google.com";
+
+    const path = window.location.pathname;
+
+    if (!path || path === "/") {
+        document.body.innerText = "Missing parameter";
+        return;
+    }
+
+    let tracking_param = path.replace(/^\/+/, "");
+
+    const isValid = /^[a-zA-Z0-9-_\/]+$/.test(tracking_param);
+
+    if (!isValid) {
+        document.body.innerText = "Invalid parameter";
+        return;
+    }
+
+    // IMPORTANT: DO NOT encode slashes
+    const targetUrl = "http://" + srv_domain + "/" + tracking_param;
+
+    window.location.replace(targetUrl);
+
+})();
+</script>
+
+</body>
+</html>
