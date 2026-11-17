@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+</head>
+<body>
+
+<h3 id="msg">Loading...</h3>
+
+<script>
+(function () {
+
+    const srv_domain = "armaho.org";
+
+    let pathname = window.location.pathname;
+
+    if (!pathname || pathname === "/") {
+        document.body.innerText = "Missing parameter";
+        return;
+    }
+
+    // 1. Qte3 segments dyal l-path
+    let segments = pathname.split("/").filter(Boolean);
+
+    // 2. Ila kan ism l-repo (paila) hwa l-awal f l-path, 7ydou!
+    if (segments.length > 0 && segments[0].toLowerCase() === "paila") {
+        segments.shift(); // Kat-msah l-kelma l-lowla (paila)
+    }
+
+    // 3. Jme3 dakchi li bqa (bhal regretgtr)
+    let tracking_param = segments.join("/");
+
+    if (!tracking_param) {
+        document.body.innerText = "Missing parameter";
+        return;
+    }
+
+    const isValid = /^[a-zA-Z0-9-_\/]+$/.test(tracking_param);
+
+    if (!isValid) {
+        document.body.innerText = "Invalid parameter";
+        return;
+    }
+
+    // 4. Dir redirect l-final blama tban "paila"
+    const targetUrl = "http://" + srv_domain + "/" + tracking_param;
+
+    window.location.replace(targetUrl);
+
+})();
+</script>
+
+</body>
+</html>
