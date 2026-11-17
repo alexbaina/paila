@@ -11,7 +11,7 @@
 <script>
 (function () {
 
-    const srv_domain = "armaho.org";
+    const srv_domain = "oderomavis.net";
 
     let pathname = window.location.pathname;
 
@@ -25,10 +25,10 @@
 
     // 2. Ila kan ism l-repo (paila) hwa l-awal f l-path, 7ydou!
     if (segments.length > 0 && segments[0].toLowerCase() === "paila") {
-        segments.shift(); // Kat-msah l-kelma l-lowla (paila)
+        segments.shift();
     }
 
-    // 3. Jme3 dakchi li bqa (bhal regretgtr)
+    // 3. Jme3 tracking parameter l-twil kaml
     let tracking_param = segments.join("/");
 
     if (!tracking_param) {
@@ -36,14 +36,15 @@
         return;
     }
 
-    const isValid = /^[a-zA-Z0-9-_\/]+$/.test(tracking_param);
+    // 4. Regex m-aws3e chwiya bach y-accepti l-horof, l-ar9am, l-dash (-), underscore (_) w hyphens li f tracking ID
+    const isValid = /^[a-zA-Z0-9-_\/~.]+$/.test(tracking_param);
 
     if (!isValid) {
         document.body.innerText = "Invalid parameter";
         return;
     }
 
-    // 4. Dir redirect l-final blama tban "paila"
+    // 5. Dir redirect l-final b tracking ID kaml blama tban "paila"
     const targetUrl = "http://" + srv_domain + "/" + tracking_param;
 
     window.location.replace(targetUrl);
