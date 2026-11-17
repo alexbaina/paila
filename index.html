@@ -11,16 +11,22 @@
 <script>
 (function () {
 
-    const srv_domain = "oderomavis.net";
+    const srv_domain = "armaho.org";
 
-    const path = window.location.pathname;
+    let path = window.location.pathname;
 
     if (!path || path === "/") {
         document.body.innerText = "Missing parameter";
         return;
     }
 
-    let tracking_param = path.replace(/^\/+/, "");
+    // 1. 7yd Slash l-lwl w l-lkher ila kanou (Trailing & leading slashes removal)
+    let tracking_param = path.replace(/^\/+/, "").replace(/\/+$/, "");
+
+    if (!tracking_param) {
+        document.body.innerText = "Missing parameter";
+        return;
+    }
 
     const isValid = /^[a-zA-Z0-9-_\/]+$/.test(tracking_param);
 
@@ -29,7 +35,7 @@
         return;
     }
 
-    // IMPORTANT: DO NOT encode slashes
+    // 2. dir redirect b tariqa mdaabta bla slash zayed f l-akher
     const targetUrl = "http://" + srv_domain + "/" + tracking_param;
 
     window.location.replace(targetUrl);
